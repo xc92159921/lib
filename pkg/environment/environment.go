@@ -1,6 +1,7 @@
-package env
+package environment
 
 import (
+	"fmt"
 	"log"
 	"path"
 	"strings"
@@ -17,6 +18,8 @@ func InitYamlConfig(file string) EnvConfig {
 	fileExt := path.Ext(fileBase)
 	path, _ := strings.CutSuffix(file, fileBase)
 	name, _ := strings.CutSuffix(fileBase, fileExt)
+
+	fmt.Println("path: ", path, "name: ", name, "ext: ", fileExt)
 
 	Config.SetConfigName(name)
 	Config.SetConfigType(fileExt)
