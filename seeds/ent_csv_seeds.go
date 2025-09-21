@@ -24,6 +24,41 @@ func Init(folder string, overflow int) {
 	defaultConfig.Overflow = overflow
 }
 
+// ReadCsvFile - читает csv файл и при завершении вызывает push
+//
+//	seeds.ReadCsvFile("users.csv", func(row map[string]string) *ent.UserCreate {
+//		model := db.Client.User.Create().SetMap(row)
+//		ID, _ := strconv.Atoi(row["id"])
+//		model.SetID(ID)
+//		return model
+//	}, func(bulk []*ent.UserCreate) {
+//
+//		db.Client.User.CreateBulk(bulk...).OnConflictColumns(user.FieldID).UpdateNewValues().ExecX(ctx)
+//	})
+//
+//	seeds.ReadCsvFile("courses.csv", func(row map[string]string) *ent.CourseCreate {
+//		model := db.Client.Course.Create().SetMap(row)
+//		ID, _ := strconv.Atoi(row["id"])
+//		model.SetID(ID)
+//		return model
+//	}, func(bulk []*ent.CourseCreate) {
+//
+//		db.Client.Course.CreateBulk(bulk...).OnConflictColumns(course.FieldID).UpdateNewValues().ExecX(ctx)
+//	})
+//
+//	seeds.ReadCsvFile("promocodes.csv", func(row map[string]string) *ent.PromocodeCreate {
+//		model := db.Client.Promocode.Create().SetMap(row)
+//		ID, _ := strconv.Atoi(row["id"])
+//		model.SetID(ID)
+//		CourseId, _ := strconv.Atoi(row["promocodeCourse"])
+//		if CourseId != 0 {
+//			model.SetCourseID(CourseId)
+//		}
+//		return model
+//	}, func(bulk []*ent.PromocodeCreate) {
+//
+//		db.Client.Promocode.CreateBulk(bulk...).OnConflictColumns(promocode.FieldID).UpdateNewValues().ExecX(ctx)
+//	})
 func ReadCsvFile[T any](fileName string, handleRow func(row map[string]string) T, pushData func(bulk []T)) {
 	absPath, _ := filepath.Abs(defaultConfig.Folder + "/" + fileName)
 	fmt.Println(absPath)
